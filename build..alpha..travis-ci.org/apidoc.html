@@ -1,0 +1,259 @@
+<div class="apidocDiv">
+<style>
+/*csslint
+*/
+.apidocDiv {
+    background: #fff;
+    font-family: Arial, Helvetica, sans-serif;
+}
+.apidocDiv a[href] {
+    color: #33f;
+    font-weight: bold;
+    text-decoration: none;
+}
+.apidocDiv a[href]:hover {
+    text-decoration: underline;
+}
+.apidocCodeCommentSpan {
+    background: #bbf;
+    color: #000;
+    display: block;
+}
+.apidocCodeKeywordSpan {
+    color: #d00;
+    font-weight: bold;
+}
+.apidocCodePre {
+    background: #eef;
+    border: 1px solid;
+    color: #777;
+    padding: 5px;
+    white-space: pre-wrap;
+}
+.apidocFooterDiv {
+    margin-top: 20px;
+    text-align: center;
+}
+.apidocModuleLi {
+    margin-top: 10px;
+}
+.apidocSectionDiv {
+    border-top: 1px solid;
+    margin-top: 20px;
+}
+.apidocSignatureSpan {
+    color: #777;
+    font-weight: bold;
+}
+</style>
+<h1>api documentation for
+    <a
+
+        href="https://github.com/ericclemmons/grunt-angular-templates"
+
+    >grunt-angular-templates (v1.1.0)</a>
+</h1>
+<h4>Grunt build task to concatenate & register your AngularJS templates in the $templateCache</h4>
+<div class="apidocSectionDiv"><a
+    href="#apidoc.tableOfContents"
+    id="apidoc.tableOfContents"
+><h1>table of contents</h1></a><ol>
+
+    <li class="apidocModuleLi"><a href="#apidoc.module.grunt-angular-templates">module grunt-angular-templates</a><ol>
+
+        <li>
+
+            <a class="apidocElementLiA" href="#apidoc.element.grunt-angular-templates.grunt-angular-templates">
+            function <span class="apidocSignatureSpan"></span>grunt-angular-templates
+            <span class="apidocSignatureSpan">(grunt)</span>
+            </a>
+
+        </li>
+
+    </ol></li>
+
+</ol></div>
+
+<div class="apidocSectionDiv">
+<h1><a href="#apidoc.module.grunt-angular-templates" id="apidoc.module.grunt-angular-templates">module grunt-angular-templates</a></h1>
+
+
+    <h2>
+        <a href="#apidoc.element.grunt-angular-templates.grunt-angular-templates" id="apidoc.element.grunt-angular-templates.grunt-angular-templates">
+        function <span class="apidocSignatureSpan"></span>grunt-angular-templates
+        <span class="apidocSignatureSpan">(grunt)</span>
+        </a>
+    </h2>
+    <ul>
+    <li>description and source-code<pre class="apidocCodePre">grunt-angular-templates = function (grunt) {
+
+  grunt.initConfig({
+    clean: {
+      tests: &#x27;tmp&#x27;
+    },
+    copy: {
+      tmp: {
+        files: [{
+          expand: true,
+          cwd: &#x27;test/fixtures&#x27;,
+          src: [&#x27;usemin.html&#x27;, &#x27;useminUgly.html&#x27;, &#x27;usemin/*&#x27;, &#x27;useminUgly/*&#x27;],
+          dest: &#x27;tmp/&#x27;
+        }]
+      }
+    },
+    nodeunit: {
+      tests: [&#x27;test/*.js&#x27;]
+    },
+    watch: {
+      tests: &#x27;&#x3c;%= nodeunit.tests %&#x3e;&#x27;,
+      tasks: &#x27;default&#x27;
+    },
+    jshint: {
+      all: [&#x27;Gruntfile.js&#x27;, &#x27;tasks/**/*.js&#x27;, &#x27;&#x3c;%= nodeunit.tests %&#x3e;&#x27;],
+      options: {
+        jshintrc: &#x27;.jshintrc&#x27;,
+      }
+    },
+    concat: {
+      custom_concat: {
+        src: &#x27;test/fixtures/one.html&#x27;,
+        dest: &#x27;tmp/custom_concat_combined.js&#x27;,
+        options: {
+          separator: &#x27;\n\n&#x27;
+        }
+      }
+    },
+    usemin: {
+      html: &#x27;tmp/useminUgly.html&#x27;
+    },
+    useminWithoutUglify: {
+      html: &#x27;tmp/usemin.html&#x27;
+    },
+    useminPrepare: {
+      html: &#x27;test/fixtures/useminUgly.html&#x27;,
+      options: {
+        dest: &#x27;tmp&#x27;,
+        staging: &#x27;tmp&#x27;,
+        flow: {
+          html: {
+            steps: {
+              js: [&#x27;concat&#x27;, &#x27;uglify&#x27;],
+              css: [&#x27;concat&#x27;, &#x27;cssmin&#x27;]
+            }
+          }
+        }
+      }
+    },
+    useminPrepareWithoutUglify: {
+      html: &#x27;test/fixtures/usemin.html&#x27;,
+      options: {
+        dest: &#x27;tmp&#x27;,
+        staging: &#x27;tmp&#x27;,
+        flow: {
+          html: {
+            steps: {
+              js: [&#x27;concat&#x27;],
+              css: [&#x27;concat&#x27;]
+            }
+          }
+        }
+      }
+    },
+    cssmin: {},
+
+    // All supported examples should be here
+    ngtemplates: {
+      // Change `angular` namespace to something else
+      custom_angular: {
+        src: [&#x27;test/fixtures/one.html&#x27;, &#x27;test/fixtures/two/**/*.html&#x27;],
+        dest: &#x27;tmp/custom_angular.js&#x27;,
+        options: {
+          angular: &#x27;myAngular&#x27;
+        }
+      },
+
+      // Custom CommonJS bootstrapper
+      custom_bootstrap: {
+        src: [&#x27;test/fixtures/one.html&#x27;, &#x27;test/fixtures/two/**/*.html&#x27;],
+        dest: &#x27;tmp/custom_bootstrap.js&#x27;,
+        options: {
+          bootstrap: function(module, script) {
+            return &#x27;module.exports = function($templateCache) {\n&#x27; + script + &#x27;\n};\n&#x27;;
+          }
+        }
+      },
+
+      // Append dest to existing concat target
+      custom_concat: {
+        src: [&#x27;test/fixtures/one.html&#x27;, &#x27;test/fixtures/two/**/*.html&#x27;],
+        dest: &#x27;tmp/custom_concat.js&#x27;,
+        options: {
+          concat: &#x27;custom_concat&#x27;
+        }
+      },
+
+      custom_usemin: {
+        src: [&#x27;test/fixtures/one.html&#x27;, &#x27;test/fixtures/two/**/*.html&#x27;],
+        dest: &#x27;tmp/custom_concat_usemin.js&#x27;,
+        options: {
+          usemin: &#x27;useminUgly/all.js&#x27;
+        }
+      },
+
+      custom_usemin_not_found: {
+        src: [&#x27;test/fixtures/one.html&#x27;, &#x27;test/fixtures/two/**/*.html&#x27;],
+        dest: &#x27;tmp/custom_concat_usemin_not_found.js&#x27;,
+        options: {
+          usemin: &#x27;useminUgly/not_found.js&#x27;
+        }
+      },
+
+      html5: {
+        src: [&#x27;test/fixtures/html5.html&#x27;],
+        dest: &#x27;tmp/html5.js&#x27;
+      },
+
+      // Minify the HTML
+      custom_htmlmin: {
+        src: [&#x27;test/fixtures/one.html&#x27;, &#x27;test/fixtures/two/**/*.html&#x27;],
+        dest: &#x27;tmp/custom_htmlmin.js&#x27;,
+        options: {
+          htmlmin: {
+            collapseBooleanAttributes:      true,
+            collapseWhitespace:             true,
+            removeAttributeQuotes:          true,
+            removeComments:                 true,
+            removeEmptyAttributes:          true,
+            removeRedundantAttributes:      true,
+            removeScriptTypeAttributes:     true,
+            removeStyleLinkTypeAttributes:  true
+          }
+        }
+      },
+
+      missing_htmlmin: {
+        src: [&#x27;test/fixtures/one.html&#x27;, &#x27;test/fixtures/two/**/*.html&#x27;],
+        dest: &#x27;tmp/missing_htmlmin.js&#x27;,
+        options: {
+          htmlmin: null
+        }
+      },
+
+      // Minify the HTML, but using another tasks&#x27; settings
+      task_htmlmin: {
+        src: [&#x27;test/fixtures/one.html&#x27;, &#x27;test/fixtures/two/**/*.html&#x27;],
+        dest: &#x27;tmp/task_htmlmin.js&#x27;,
+        options: {
+          htmlmin: &#x27;&#x3c;%= ...</pre></li>
+    <li>example usage<pre class="apidocCodePre">n/a</pre></li>
+    </ul>
+
+
+</div>
+
+<div class="apidocFooterDiv">
+    [ this document was created with
+    <a href="https://github.com/kaizhu256/node-utility2" target="_blank">utility2</a>
+    ]
+</div>
+</div>
